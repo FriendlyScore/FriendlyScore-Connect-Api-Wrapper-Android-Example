@@ -36,7 +36,7 @@ FriendlyScore Connect API Wrapper allows you build custom UX to connect bank acc
 &nbsp;
 &nbsp;
 
-#### **Add the following values to your App Level build.gradle file(In the demo app/build.gradle)**
+#### Add the following values to your App Level build.gradle file(In the demo app/build.gradle)
   Now we must read the configuration to create the string resources that will be used by the FriendlyScore Android SDK.
 
     android {
@@ -47,7 +47,7 @@ FriendlyScore Connect API Wrapper allows you build custom UX to connect bank acc
       }
     }
 
-#### **Add FriendlyScore Android Framework to your app**
+#### Add FriendlyScore Android Framework to your app
   In your module or app-level gradle file(In the demo `app/build.gradle`) please add the FriendlyScore Android SDK library listed below to your list of dependencies
 
     dependencies {
@@ -55,7 +55,7 @@ FriendlyScore Connect API Wrapper allows you build custom UX to connect bank acc
        implementation 'com.github.friendlyscore:friendlyscore-android-connect-api-wrapper:0.1.0'
     }
 
-## **Integrating with FriendlyScore**
+### Integrating with FriendlyScore
 
 You can select which environment you want to use the FriendlyScore SDK
 
@@ -71,7 +71,7 @@ These environments are listed in the SDK as below
 
 Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com/company/keys) based on the environment you are using.
 
-#### **Steps**
+#### Steps
 
 1. Get access token
 
