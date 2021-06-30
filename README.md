@@ -6,7 +6,7 @@ FriendlyScore Connect API Wrapper allows you build custom UX to connect bank acc
 
   - Install or update Android Studio to version 3.2 or greater
   - We support Android 5.0 and greater
-  - [FriendlyScore Client Id](https://friendlyscore.com/company/keys)
+  - [FriendlyScore Client Id & Secret](https://friendlyscore.com/company/keys). **DO NOT put your `Client Secret`** in your mobile app.
 
 
 ### QuickStart
