@@ -75,9 +75,9 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
 
     Your server must use `client_id` and `client_secret` to authorize itself with the FriendlyScore Servers.
 
-    The successful completion of authorization request will provide you with access_token.
+    The successful completion of authorization request will provide you with `access_token`.
 
-    This access_token is required to generate a userToken to make user related requests.
+    This access_token is required to generate a `userToken` to make user related requests.
 
     Your app must ask your server for the `access_token`
 
