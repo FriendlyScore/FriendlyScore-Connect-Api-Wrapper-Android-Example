@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/access_token_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="You must have access token from your server! To continue with actions below"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.35"
+        android:layout_margin="16dp"
+        android:textSize="14sp"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        />
+
+
+    <Button
+        android:id="@+id/create_user_token"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create User Token"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="16dp"
+        android:background="#0492c2"
+        android:textColor="#FFFFFF"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@+id/access_token_message" />
+
+
+    <Button
+        android:id="@+id/get_list_banks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Get List of Banks"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="16dp"
+        android:background="#0492c2"
+        android:textColor="#FFFFFF"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@+id/create_user_token"
+
+        />
+
+
+
+    <Button
+        android:id="@+id/get_consent_screen_for_first_bank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Get Consent Screen for first bank"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="16dp"
+        android:background="#0492c2"
+        android:textColor="#FFFFFF"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@+id/get_list_banks"
+
+        />
+
+
+    <Button
+        android:id="@+id/get_consent_url_for_first_bank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Get Bank Flow url for first bank"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="16dp"
+        android:background="#0492c2"
+        android:textColor="#FFFFFF"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@+id/get_consent_screen_for_first_bank"
+
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
