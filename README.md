@@ -33,9 +33,6 @@ FriendlyScore Connect API Wrapper allows you build custom UX to connect bank acc
     }
 ### FriendlyScore Configuration
 
-&nbsp;
-&nbsp;
-
 #### Add the following values to your App Level build.gradle file(In the demo app/build.gradle)
   Now we must read the configuration to create the string resources that will be used by the FriendlyScore Android SDK.
 
