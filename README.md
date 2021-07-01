@@ -284,11 +284,11 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
             * @param bankSlug - Slug for the bank user has selected from the list of banks
             * @param transactionFromTimeStampInSec - Timestamp in seconds
             * @param transactionToTimeStampInSec -   Timestamp in seconds   
-            * @param consentScreenCallback - ConnectRequestErrorHandler.ConnectRequestCallback<ConsentScreen>
+            * @param consentScreenCallback - ConnectRequestErrorHandler.ConnectRequestCallback<ConsentScreenInformation>
 
         */
 
-            public ConnectRequestErrorHandler.ConnectRequestCallback<ConsentScreen> consentScreenCallback = new ConnectRequestErrorHandler.ConnectRequestCallback<ConsentScreen>() {
+            public ConnectRequestErrorHandler.ConnectRequestCallback<ConsentScreenInformation> consentScreenCallback = new ConnectRequestErrorHandler.ConnectRequestCallback<ConsentScreenInformation>() {
                 @Override
                 public void success(Response<ConsentScreenInformation> response) {
                     

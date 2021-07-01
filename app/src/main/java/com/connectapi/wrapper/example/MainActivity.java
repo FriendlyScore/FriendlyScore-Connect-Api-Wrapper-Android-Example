@@ -127,9 +127,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(bankList != null) {
                     //Max Number of months in the past, data for this bank can be accessed from
-                    int numberOfMonthsInPast  = bankList.get(0).bank.bank_configuration.transactions_consent_from.intValue();
+                    int numberOfMonthsInPast  = bankList.get(0).bank.bank_configuration.transactions_consent_from;
                     //Max Number of months in the future, data for this bank will be available for
-                    int numberOfMonthsInFuture = bankList.get(0).bank.bank_configuration.transactions_consent_to.intValue();
+                    int numberOfMonthsInFuture = bankList.get(0).bank.bank_configuration.transactions_consent_to;
 
                     //Set the value to null for both transactionFromTimeStampInSec and transactionToTimeStampInSec to use default values
                     //If you want to provide custom period smaller than these above, then provide a timestamp in seconds
@@ -244,9 +244,9 @@ public class MainActivity extends AppCompatActivity {
                 //Bank Type {Personal, Business}
                 String type = bankList.get(0).bank.type;
                 //Max Number of months in the past, data for this bank can be accessed from
-                long numberOfMonthsInPast  = bankList.get(0).bank.bank_configuration.transactions_consent_from;
+                int numberOfMonthsInPast  = bankList.get(0).bank.bank_configuration.transactions_consent_from;
                 //Max Number of months in the future, data for this bank will be available for
-                long numberOfMonthsInFuture = bankList.get(0).bank.bank_configuration.transactions_consent_to;
+                int numberOfMonthsInFuture = bankList.get(0).bank.bank_configuration.transactions_consent_to;
                 // Status if the user has connected the with an account at the bank
                 Boolean connectedBank = bankList.get(0).connected;
                 //The flag when true indicates the bank APIs are available
