@@ -118,15 +118,6 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
 
     In order to receive response you must implement the `ConnectRequestCallback<UserAuthSuccessResponse>`.
 
-    &nbsp;
-    &nbsp;
-    #### **Required parameters:**
-    `fsClient` - FriendlyScoreClient
-
-    `userReference` - Unique user reference that identifies user in your systems.
-
-    `userAuthListener` - ConnectRequestCallback<UserAuthSuccessResponse>
-
 
         public ConnectRequestErrorHandler.ConnectRequestCallback<UserAuthSuccessResponse> userAuthCallback = new ConnectRequestErrorHandler.ConnectRequestCallback<UserAuthSuccessResponse>() {
 
@@ -167,8 +158,17 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
             public void unexpectedError(Throwable t) {
             }
         };
+    
+    &nbsp;
+    &nbsp;
+    #### **Required parameters:**
+    
 
-        Use the FriendlyScoreClient to make the requests
+    `userReference` - Unique user reference that identifies user in your systems.
+
+    `userAuthListener` - ConnectRequestCallback<UserAuthSuccessResponse>
+        
+    Use the FriendlyScoreClient to make the requests
 
         fsClient.createUserToken(userReference, userAuthCallback);
 
@@ -181,17 +181,7 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
 
     In order to receive response you must implement the `ConnectRequestCallback<List<UserBank>>`
 
-    &nbsp;
-    &nbsp;
-    #### **Required parameters:**
-
-    `fsClient` - FriendlyScoreClient
-
-    `userToken` - User Token obtained from authorization endpoint
-
-    `listOfBanksListener` - ConnectRequestErrorHandler.ConnectRequestCallback<List<UserBank>>
-
-
+    
         public ConnectRequestErrorHandler.ConnectRequestCallback<List<UserBank>> listOfBanksListener = new ConnectRequestErrorHandler.ConnectRequestCallback<List<UserBank>>() {
             @Override
             public void success(Response<List<UserBank>> response) {
@@ -210,8 +200,16 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
 
             ...
         };
+    
+    &nbsp;
+    &nbsp;
+    #### **Required parameters:**
 
-        fsClient.fetchBankList(user_reference, listOfBanksListener);
+    `userToken` - User Token obtained from authorization endpoint
+
+    `listOfBanksListener` - ConnectRequestErrorHandler.ConnectRequestCallback<List<UserBank>>
+
+        fsClient.fetchBankList(userToken, listOfBanksListener);
 
 
     The important values for each bank that will be required for the ui and future requests. For example, for the first bank in the list, we show the important values:
@@ -240,7 +238,6 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
 
     The `bankSlug` value in the code block above is used across all the endpoints to build the rest of the user journey.
 
-    The `numberOfMonthsInPast` and  `numberOfMonthsInFuture` variables in the block above are the maximum number of months in past and future for which account information can be accessed. You must use these values to calculate timestamps for future
 
 &nbsp;
 &nbsp;
@@ -251,19 +248,23 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
 
     In order to receive response you must implement the `ConnectRequestCallback<ConsentScreenInformation>`
 
-    Make this request to create the consent screen using the required and regulated information for the bank the user selected
+   &nbsp;
+   &nbsp;
 
-    You can generate the consent screen for the selected bank. You can also provide `transactionFromTimeStampInSec` and `transactionToTimeStampInSec`.
-
-    You can set this value to null to use default values.
+       
+            public ConnectRequestErrorHandler.ConnectRequestCallback<ConsentScreenInformation> consentScreenCallback = new ConnectRequestErrorHandler.ConnectRequestCallback<ConsentScreenInformation>() {
+                @Override
+                public void success(Response<ConsentScreenInformation> response) {
+                    
+                }   
+            ...
+            }
 
 
     &nbsp;
     &nbsp;
     #### **Required parameters:**
 
-
-    `fsClient` - FriendlyScoreClient
 
     `userToken` - User Token obtained from authorization endpoint
 
@@ -274,33 +275,12 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
     `transactionToTimeStampInSec`  - Set to null to use default values.
 
     `consentScreenCallback` - ConnectRequestErrorHandler.ConnectRequestCallback<ConsentScreenInformation>
-    &nbsp;
-    &nbsp;
+            
 
-        /**
-
-            * @param fsClient - FriendlyScoreClient
-            * @param userToken - User Token obtained from authorization endpoint
-            * @param bankSlug - Slug for the bank user has selected from the list of banks
-            * @param transactionFromTimeStampInSec - Timestamp in seconds
-            * @param transactionToTimeStampInSec -   Timestamp in seconds   
-            * @param consentScreenCallback - ConnectRequestErrorHandler.ConnectRequestCallback<ConsentScreenInformation>
-
-        */
-
-            public ConnectRequestErrorHandler.ConnectRequestCallback<ConsentScreenInformation> consentScreenCallback = new ConnectRequestErrorHandler.ConnectRequestCallback<ConsentScreenInformation>() {
-                @Override
-                public void success(Response<ConsentScreenInformation> response) {
-                    
-                }   
-            ...
-            }
-        
-
-        fsClient.fetchConsentScreenInformation(friendlyScoreUserToken, bankSlug, transactionFromTimeStampInSec, transactionToTimeStampInSec, consentScreenCallback);
+        fsClient.fetchConsentScreenInformation(userToken, bankSlug, transactionFromTimeStampInSec, transactionToTimeStampInSec, consentScreenCallback);
 
 
-    The `ConsentScreenInformation` includes 2 objects `metadata` and `consents`. You can use information in `metadata` to build your custom consent information text. The `consents` object provides ready-to-use text to build the consent screen.
+    The ConsentScreenInformation includes 2 objects `metadata` and `consents`. You can use information in `metadata` to build your custom consent information text. The `consents` object provides ready-to-use text to build the consent screen.
 
 &nbsp;
 &nbsp;
@@ -313,22 +293,7 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
 
     In order to receive response you must implement the `ConnectRequestCallback<BankFlowUrl>`
 
-    &nbsp;
-    &nbsp;
-    #### **Required parameters:** 
-
-
-    `fsClient` - FriendlyScoreClient
-        
-    `userToken` - User Token obtained from authorization endpoint
-        
-    `bankSlug` - Slug for the bank user has selected from the list of banks
-
-    `transactionFromTimeStampInSec` - Time stamp in seconds. Set to null to use default
-
-    `transactionToTimeStampInSec` - Time stamp in seconds. Set to null to use default.
-
-    `bankFlowUrlListener` - ConnectRequestErrorHandler.ConnectRequestCallback<BankFlowUrl> 
+    
          
     &nbsp;
     &nbsp;
@@ -344,7 +309,22 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
             ...
         }
         
+    &nbsp;
+    &nbsp;
+    #### **Required parameters:** 
 
+        
+    `userToken` - User Token obtained from authorization endpoint
+        
+    `bankSlug` - Slug for the bank user has selected from the list of banks
+
+    `transactionFromTimeStampInSec` - Time stamp in seconds. Set to null to use default
+
+    `transactionToTimeStampInSec` - Time stamp in seconds. Set to null to use default.
+
+    `bankFlowUrlListener` - ConnectRequestErrorHandler.ConnectRequestCallback<BankFlowUrl> 
+  
+  
 
         fsClient.fetchBankFlowUrl(userToken, bankSlug, transactionFromTimeStampInSec, transactionToTimeStampInSec, bankFlowUrlListener);
     
@@ -451,15 +431,7 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
 
     In order to receive response you must implement the `ConnectRequestErrorHandler.ConnectRequestCallback<Void>`
 
-    &nbsp;
-    &nbsp;
 
-    #### **Required parameters:** 
-    `fsClient` - FriendlyScoreClient
-
-    `userToken` - User Token obtained from authorization endpoint
-        
-    `bankSlug` - Slug for the bank user has selected from the list of banks
 
         public ConnectRequestErrorHandler.ConnectRequestCallback<Void > bankConsentDeleteListener = new ConnectRequestErrorHandler.ConnectRequestCallback<Void>() {
 
@@ -469,5 +441,15 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
             }
             ...
         }
+  
+      &nbsp;
+      &nbsp;
+
+    #### **Required parameters:** 
+    `fsClient` - FriendlyScoreClient
+
+    `userToken` - User Token obtained from authorization endpoint
+        
+    `bankSlug` - Slug for the bank user has selected from the list of banks
 
         fsClient.deleteBankConsent(userToken, bankSlug, bankConsentDeleteListener );
