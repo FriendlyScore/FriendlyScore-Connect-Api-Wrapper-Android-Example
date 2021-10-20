@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
     //Your FriendlyScore client_id. Obtain from your FriendlyScore developer console.
     String clientId = "YOUR_CLIENT_ID";
 
+    //Redirect Uri you have set in the FriendlyScore developer console.
+    String redirectUriVal="com.demo.friendlyscore.connect";
     /**
      In order to initialize FriendlyScore for your user you must have the `userReference` for that user.
      The `userReference` uniquely identifies the user in your systems.
@@ -117,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
                     fsClient.fetchConsentScreenInformation(friendlyScoreUserToken, bankList.get(0).bank.slug, previousCal.getTimeInMillis()/1000, futureCal.getTimeInMillis()/1000, consentScreenCallback);
                 }else{
-                    Log.e(TAG, "You must select a bank from bank list and prvide the slug");
+                    Log.e(TAG, "You must select a bank from bank list and provide the slug");
                 }
             }
         });
@@ -142,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
                     previousCal.add(Calendar.MONTH,(-1)*numberOfMonthsInPast);
 
-                    fsClient.fetchBankFlowUrl(friendlyScoreUserToken, bankList.get(0).bank.slug, previousCal.getTimeInMillis()/1000, futureCal.getTimeInMillis()/1000, getBankConsentUrlListener);
+                    fsClient.fetchBankFlowUrl(friendlyScoreUserToken, bankList.get(0).bank.slug, previousCal.getTimeInMillis()/1000, futureCal.getTimeInMillis()/1000, redirectUriVal, getBankConsentUrlListener);
                 }else{
                     Log.e(TAG, "You must select a bank from bank list and prvide the slug");
                 }
@@ -160,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
         */
     }
 
-
     /**
      * Generate a friendlyscore client
      * @param environment - SANDBOX, PRODUCTION
@@ -173,8 +174,6 @@ public class MainActivity extends AppCompatActivity {
         return fsClient;
 
     }
-
-
 
 
     /**
@@ -332,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void success(Response<ConsentScreenInformation> response) {
             ConsentScreenInformation consentScreenInformation = response.body();
-            Log.e(MainActivity.class.getSimpleName(), "consent Screen Information for:"+consentScreenInformation.metadata.slug + " available" );
+            Log.e(MainActivity.class.getSimpleName(), "Consent Screen Information for:"+consentScreenInformation.metadata.slug + " available" );
         }
 
         @Override

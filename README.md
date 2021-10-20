@@ -49,7 +49,7 @@ FriendlyScore Connect API Wrapper allows you build custom UX to connect bank acc
 
     dependencies {
        ...
-       implementation 'com.github.friendlyscore:friendlyscore-android-connect-api-wrapper:0.1.0'
+       implementation 'com.github.friendlyscore:friendlyscore-android-connect-api-wrapper:0.1.2'
     }
 
 ### Integrating with FriendlyScore
@@ -309,7 +309,10 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
 
     Make this request from the consent screen after the user has seen all the information that will is being requested.
 
-    You must make this request to get the url to open the Bank Flow for users to authorize access account information
+    You must make this request to get the url to open the Bank Flow for users to authorize access account information.
+
+    You need the `redirectUri` so FriendlyScore can redirect the user back to your app. This must be the scheme you are using to bring the user back to your app.
+    It must be the same as set in the FriendlyScore developer console and AndroidManifest.xml while declaring the activity.
 
     In order to receive response you must implement the `ConnectRequestCallback<BankFlowUrl>`
 
@@ -327,6 +330,8 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
     `transactionFromTimeStampInSec` - Time stamp in seconds. Set to null to use default
 
     `transactionToTimeStampInSec` - Time stamp in seconds. Set to null to use default.
+
+    `redirectUri` - This must be the scheme you are using to bring the user back to your app. It must be the same as set in the FriendlyScore developer console and AndroidManifest.xml while declaring the activity.
 
     `bankFlowUrlListener` - ConnectRequestErrorHandler.ConnectRequestCallback<BankFlowUrl> 
          
@@ -346,7 +351,7 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
         
 
 
-        fsClient.fetchBankFlowUrl(userToken, bankSlug, transactionFromTimeStampInSec, transactionToTimeStampInSec, bankFlowUrlListener);
+        fsClient.fetchBankFlowUrl(userToken, bankSlug, transactionFromTimeStampInSec, transactionToTimeStampInSec, redirectUri, bankFlowUrlListener);
     
 
 
