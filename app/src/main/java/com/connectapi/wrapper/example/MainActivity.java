@@ -2,6 +2,8 @@ package com.connectapi.wrapper.example;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -102,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(bankList!=null) {
+                    //In sandbox only Demo-Bank would work
                     //Max Number of months in the past, data for this bank can be accessed from
                     int numberOfMonthsInPast  = bankList.get(0).bank.bank_configuration.transactions_consent_from;
                     //Max Number of months in the future, data for this bank will be available for
