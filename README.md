@@ -330,23 +330,6 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
             ...
         }
         
-    &nbsp;
-    &nbsp;
-    #### **Required parameters:** 
-
-        
-    `userToken` - User Token obtained from authorization endpoint
-        
-    `bankSlug` - Slug for the bank user has selected from the list of banks
-
-    `transactionFromTimeStampInSec` - Time stamp in seconds. Set to null to use default
-
-    `transactionToTimeStampInSec` - Time stamp in seconds. Set to null to use default.
-
-    `bankFlowUrlListener` - ConnectRequestErrorHandler.ConnectRequestCallback<BankFlowUrl> 
-  
-  
-
         fsClient.fetchBankFlowUrl(userToken, bankSlug, transactionFromTimeStampInSec, transactionToTimeStampInSec, redirectUri, bankFlowUrlListener);
     
 
