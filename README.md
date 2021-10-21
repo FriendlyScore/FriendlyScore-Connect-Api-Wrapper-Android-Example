@@ -329,8 +329,9 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
             }
             ...
         }
-        
-        fsClient.fetchBankFlowUrl(userToken, bankSlug, transactionFromTimeStampInSec, transactionToTimeStampInSec, redirectUri, bankFlowUrlListener);
+            //Redirect Uri you have set in the FriendlyScore developer console.
+            String redirectUriVal="YOUR_APP_REDIRECT_SCHEME";
+        fsClient.fetchBankFlowUrl(userToken, bankSlug, transactionFromTimeStampInSec, transactionToTimeStampInSec, redirectUriVal, bankFlowUrlListener);
     
 
 
