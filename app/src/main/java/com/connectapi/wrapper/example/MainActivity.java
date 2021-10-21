@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     String clientId = "YOUR_CLIENT_ID";
 
     //Redirect Uri you have set in the FriendlyScore developer console.
+    //Pass this value as parameter when you request the url for the bank authorization flow.
     String redirectUriVal="com.demo.friendlyscore.connect";
     /**
      In order to initialize FriendlyScore for your user you must have the `userReference` for that user.
