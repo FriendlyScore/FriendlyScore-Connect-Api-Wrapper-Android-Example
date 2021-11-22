@@ -32,45 +32,35 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     public final String TAG = MainActivity.class.getSimpleName();
     String friendlyScoreUserToken = null;
-    Button create_user_token;
     Button get_list_banks;
     Button get_consent_screen_for_first_bank_list;
     Button get_bank_flow_url_for_first_bank_list;
 
 
 
-    public String get_access_token_from_your_server(){
+    public String get_user_token_from_your_server(){
 
         /**
          *
-         * Your server must use client_id and client_secret to authorize itself with the FriendlyScore Servers.
+         * A user token can be created for the user using the `customer_id`. A `customer_id` is available after creating the user [Create Customer](https://docs.friendlyscore.com/api-reference/customers/create-customer)
+
+         * You must then use the `customer_id` to create `user_token` [Create User Token](https://docs.friendlyscore.com/api-reference/customers/create-customer-token)
          *
-         * The successful completion of authorization request will provide you with access_token.
-         * This access_token is required to generate a user_token to make user related requests.
-         * Your app must ask the server for the `access_token`
-         *
-         * To Test, you can use POSTMAN to get the access token locally on your development machine.
+         *  Your app must ask the server for the `user_token`
          */
 
-        String access_token = "get_access_token_from_your_server";
+        String user_token = "get_user_token_from_your_server";
 
-        return access_token;
+        return user_token;
     }
 
     FriendlyScoreClient fsClient;
 
-    //Your FriendlyScore client_id. Obtain from your FriendlyScore developer console.
-    String clientId = "YOUR_CLIENT_ID";
 
     //Redirect Uri you have set in the FriendlyScore developer console.
     //Pass this value as parameter when you request the url for the bank authorization flow.
     String redirectUriVal="com.demo.friendlyscore.connect";
-    /**
-     In order to initialize FriendlyScore for your user you must have the `userReference` for that user.
-     The `userReference` uniquely identifies the user in your systems.
-     This `userReference` can then be used to access information from the FriendlyScore [api](https://friendlyscore.com/developers/api).
-     */
-    public String userReference = "your_user_reference";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,20 +68,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        fsClient  = createFriendlyScoreClient(Environment.PRODUCTION, clientId, get_access_token_from_your_server());
+        fsClient  = createFriendlyScoreClient(Environment.PRODUCTION);
 
-
-        create_user_token = (Button)findViewById(R.id.create_user_token);
+        friendlyScoreUserToken = get_user_token_from_your_server();
         get_list_banks = (Button)findViewById(R.id.get_list_banks);
         get_consent_screen_for_first_bank_list = (Button)findViewById(R.id.get_consent_screen_for_first_bank);
         get_bank_flow_url_for_first_bank_list = (Button)findViewById(R.id.get_consent_url_for_first_bank);
-
-        create_user_token.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fsClient.createUserToken(userReference, userAuthCallback);
-            }
-        });
 
         get_list_banks.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,26 +137,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*
 
-            Your app must handle redirection for
-            /openbanking/code - successful authorization by user. It should have parameter 'bank_slug'
-            /openbanking/error - error in authorization or user did not complete authorization. It should have parameter 'bank_slug' and 'error'
-
-            Please look at the documentation for how to implement activity that will open automatically on redirection.
-
-        */
     }
 
     /**
      * Generate a friendlyscore client
      * @param environment - SANDBOX, PRODUCTION
-     * @param client_id - Client ID for  environment
-     * @param access_token - access token obtained from server
      * @return
      */
-    public FriendlyScoreClient createFriendlyScoreClient(Environment environment, String client_id, String access_token){
-        final FriendlyScoreClient fsClient = new FriendlyScoreClient(environment, client_id, access_token);
+    public FriendlyScoreClient createFriendlyScoreClient(Environment environment){
+        final FriendlyScoreClient fsClient = new FriendlyScoreClient(environment);
         return fsClient;
 
     }
@@ -189,42 +161,6 @@ public class MainActivity extends AppCompatActivity {
     public void deleteBankConsent(FriendlyScoreClient fsClient, String friendlyScoreUserToken, String bankSlug){
         fsClient.deleteBankConsent(friendlyScoreUserToken, bankSlug, bankConsentDeleteListener );
     }
-
-    public ConnectRequestErrorHandler.ConnectRequestCallback<UserAuthSuccessResponse> userAuthCallback = new ConnectRequestErrorHandler.ConnectRequestCallback<UserAuthSuccessResponse>() {
-        @Override
-        public void success(Response<UserAuthSuccessResponse> response) {
-            UserAuthSuccessResponse userAuthSuccessResponse = response.body();
-            //Save this token to make other requests for the user
-            friendlyScoreUserToken = userAuthSuccessResponse.getToken();
-            Log.e(MainActivity.class.getSimpleName(), "user_token:"+friendlyScoreUserToken);
-        }
-
-        @Override
-        public void unauthenticated(Response<?> response) {
-
-        }
-
-        @Override
-        public void unauthorized(Response<?> response) {
-        }
-
-        @Override
-        public void clientError(Response<?> response) {
-        }
-
-        @Override
-        public void serverError(Response<?> response) {
-        }
-
-        @Override
-        public void networkError(IOException e) {
-            Log.e(UserReferenceAuthCallback.class.getSimpleName(),e.getMessage());
-        }
-
-        @Override
-        public void unexpectedError(Throwable t) {
-        }
-    };
 
     List<UserBank> bankList;
     public ConnectRequestErrorHandler.ConnectRequestCallback<List<UserBank>> listOfBanksListener = new ConnectRequestErrorHandler.ConnectRequestCallback<List<UserBank>>() {

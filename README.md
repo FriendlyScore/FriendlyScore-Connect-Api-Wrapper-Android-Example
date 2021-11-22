@@ -6,8 +6,6 @@ FriendlyScore Connect API Wrapper allows you build custom UX to connect bank acc
 
   - Install or update Android Studio to version 3.2 or greater
   - We support Android 5.0 and greater
-  - [FriendlyScore Client Id & Secret](https://friendlyscore.com/company/keys). **DO NOT put your `Client Secret`** in your mobile app.
-
 
 ### QuickStart
   The easiest way to get started is to clone the repository https://github.com/FriendlyScore/FriendlyScore-Connect-Api-Wrapper-Android-Example. Please follow the instructions below to provide the necessary configuration and to understand the flow.
@@ -49,7 +47,7 @@ FriendlyScore Connect API Wrapper allows you build custom UX to connect bank acc
 
     dependencies {
        ...
-       implementation 'com.github.friendlyscore:friendlyscore-android-connect-api-wrapper:0.1.2'
+       implementation 'com.github.friendlyscore:friendlyscore-android-connect-api-wrapper:0.2.0'
     }
 
 ### Integrating with FriendlyScore
@@ -66,24 +64,13 @@ These environments are listed in the SDK as below
     Environments.SANDBOX
     Environments.PRODUCTION
 
-Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com/company/keys) based on the environment you are using.
-
 #### Steps
 
-1. Get access token
+1. Get User token
 
+    A user token can be created for the user using the `customer_id`. A `customer_id` is available after creating the user [Create Customer](https://docs.friendlyscore.com/api-reference/customers/create-customer)
 
-    Your server must use `client_id` and `client_secret` to authorize itself with the FriendlyScore Servers.
-
-    The successful completion of authorization request will provide you with `access_token`.
-
-    This access_token is required to generate a `userToken` to make user related requests.
-
-    Your app must ask your server for the `access_token`
-
-    **DO NOT put your `client_secret`** in your mobile app.
-
-    You can look at the [API reference](https://friendlyscore.com/developers/api-reference#post-/oauth/v2/token) on how to get the access token
+    You must then use the `customer_id` to create `user_token` [Create User Token](https://docs.friendlyscore.com/api-reference/customers/create-customer-token)
 
 &nbsp;
 &nbsp;
@@ -96,15 +83,11 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
         /**
         * 
         * @param environment
-        * @param client_id
-        * @param access_token
         */
         
         Environment environment = Environment.SANDBOX
-        String client_id = "YOUR_CLIENT_ID"
-        String access_token = "access_token_from_step_1"
 
-        final FriendlyScoreClient fsClient = createFriendlyScoreClient(environment, client_id, access_token);
+        final FriendlyScoreClient fsClient = createFriendlyScoreClient(environment);
 
 
     The `fsClient` will be required to make other requests
@@ -112,70 +95,8 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
 &nbsp;
 &nbsp;
 
-3. Create User Token
 
-    You must create `userToken` in order to make any request for the user.
-
-    In order to receive response you must implement the `ConnectRequestCallback<UserAuthSuccessResponse>`.
-
-
-        public ConnectRequestErrorHandler.ConnectRequestCallback<UserAuthSuccessResponse> userAuthCallback = new ConnectRequestErrorHandler.ConnectRequestCallback<UserAuthSuccessResponse>() {
-
-            @Override
-            public void success(Response<UserAuthSuccessResponse> response) {
-                UserAuthSuccessResponse userAuthSuccessResponse = response.body();
-                //Save this token to make other requests for the user
-                userToken = userAuthSuccessResponse.getToken();
-
-            }
-
-            @Override
-            public void unauthenticated(Response<?> response) {
-                //Status Code 401
-            }
-
-            @Override
-            public void unauthorized(Response<?> response) {
-                //Status Code 403
-            }
-
-            @Override
-            public void clientError(Response<?> response) {
-                //Status Code [400, 500) expect 401 & 403
-            }
-
-            @Override
-            public void serverError(Response<?> response) {
-                //Status Code 500
-            }
-
-            @Override
-            public void networkError(IOException e) {
-
-            }
-
-            @Override
-            public void unexpectedError(Throwable t) {
-            }
-        };
-    
-    &nbsp;
-    &nbsp;
-    #### **Required parameters:**
-    
-
-    `userReference` - Unique user reference that identifies user in your systems.
-
-    `userAuthListener` - ConnectRequestCallback<UserAuthSuccessResponse>
-        
-    Use the FriendlyScoreClient to make the requests
-
-        fsClient.createUserToken(userReference, userAuthCallback);
-
-&nbsp;
-&nbsp;
-
-4. Get List of Banks
+3. Get List of Banks
 
     You can obtain the list of banks for the user
 
@@ -205,7 +126,7 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
     &nbsp;
     #### **Required parameters:**
 
-    `userToken` - User Token obtained from authorization endpoint
+    `userToken` - User Token obtained from your server
 
     `listOfBanksListener` - ConnectRequestErrorHandler.ConnectRequestCallback<List<UserBank>>
 
@@ -242,7 +163,7 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
 &nbsp;
 &nbsp;
 
-5. Get Bank Consent Screen Information
+4. Get Bank Consent Screen Information
 
     Once the user has selected a bank from the list. You must show the user the necessary information as required by the law.
 
@@ -266,7 +187,7 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
     #### **Required parameters:**
 
 
-    `userToken` - User Token obtained from authorization endpoint
+    `userToken` - User Token obtained from your server
 
     `bankSlug` - Slug for the bank user has selected from the list of banks
 
@@ -285,7 +206,7 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
 &nbsp;
 &nbsp;
 
-6. Get Bank Flow Url
+5. Get Bank Flow Url
 
     Make this request from the consent screen after the user has seen all the information that will is being requested.
 
@@ -300,10 +221,8 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
     &nbsp;
     #### **Required parameters:** 
 
-
-    `fsClient` - FriendlyScoreClient
         
-    `userToken` - User Token obtained from authorization endpoint
+    `userToken` - User Token obtained from your server
         
     `bankSlug` - Slug for the bank user has selected from the list of banks
 
@@ -342,7 +261,7 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
 &nbsp;
 
 
-7. Redirect back to the app
+6. Redirect back to the app
 
     Go to the Redirects section of the [FriendlyScore developer console](https://friendlyscore.com/company/keys) and provide your `Android Scheme` and `Android Package`
 
@@ -429,7 +348,7 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
 &nbsp;
 &nbsp;
 
-8. Delete Account Consent
+7. Delete Account Consent
 
     Make this request to allow the user to delete consent to access account information.
 
@@ -451,9 +370,8 @@ Choose the correct [FriendlyScore Client Id & Secret ](https://friendlyscore.com
       &nbsp;
 
     #### **Required parameters:** 
-    `fsClient` - FriendlyScoreClient
 
-    `userToken` - User Token obtained from authorization endpoint
+    `userToken` - User Token obtained from your server
         
     `bankSlug` - Slug for the bank user has selected from the list of banks
 
