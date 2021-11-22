@@ -87,7 +87,7 @@ These environments are listed in the SDK as below
         
         Environment environment = Environment.SANDBOX
 
-        final FriendlyScoreClient fsClient = createFriendlyScoreClient(environment);
+        final FriendlyScoreClient fsClient = new FriendlyScoreClient(environment);
 
 
     The `fsClient` will be required to make other requests

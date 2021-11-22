@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        fsClient  = createFriendlyScoreClient(Environment.PRODUCTION);
+        fsClient  = new FriendlyScoreClient(Environment.PRODUCTION);
 
         friendlyScoreUserToken = get_user_token_from_your_server();
         get_list_banks = (Button)findViewById(R.id.get_list_banks);
@@ -139,18 +139,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-    /**
-     * Generate a friendlyscore client
-     * @param environment - SANDBOX, PRODUCTION
-     * @return
-     */
-    public FriendlyScoreClient createFriendlyScoreClient(Environment environment){
-        final FriendlyScoreClient fsClient = new FriendlyScoreClient(environment);
-        return fsClient;
-
-    }
-
 
     /**
      * Make this request if the user wants to withdraw consent for accessing bank account information
