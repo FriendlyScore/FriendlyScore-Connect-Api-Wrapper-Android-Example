@@ -358,10 +358,11 @@ These environments are listed in the SDK as below
 
 
         public ConnectRequestErrorHandler.ConnectRequestCallback<Void > bankConsentDeleteListener = new ConnectRequestErrorHandler.ConnectRequestCallback<Void>() {
-
+        /** Called for status code 204 response. */
         @Override
             public void success(Response<Void> response) {
-
+                int statusCode = response.code()
+                //If status code is 204, its successful. messsage = No content
             }
             ...
         }
